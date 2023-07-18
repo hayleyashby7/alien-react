@@ -10,3 +10,30 @@ body {
 	justify-content: center;
 	margin: 0;
 }
+
+.w12MForm {
+	display: flex;
+	flex-flow: column wrap;
+	margin: 3rem;
+	align-items: space-evenly;
+}
+
+.formInput {
+	display: flex;
+	flex-flow: row nowrap;
+	margin: 0.5rem;
+	gap: 0.5rem;
+}
+
+.formInput > input {
+	flex-grow: 2;
+}
+
+.w12MForm > button {
+	border-radius: 0.25rem;
+	border: none;
+	background-color: black;
+	color: var(--light);
+	padding: 0.5rem;
+	font-size: 1rem;
+}

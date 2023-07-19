@@ -47,8 +47,8 @@ test('renders Species component with props', () => {
 
 test('renders Species component with props and updates', async () => {
 	// Arrange
-    let text = '';
-    
+	let text = '';
+
 	const mockOnChangeUpdate = jest.fn((event: ChangeEvent<HTMLInputElement>) => {
 		text += event.target.value;
 	});
@@ -59,7 +59,6 @@ test('renders Species component with props and updates', async () => {
 	await userEvent.type(screen.getByRole('textbox'), 'Human');
 
 	// Assert
-	expect(mockOnChangeUpdate).toHaveBeenCalled();
 	expect(mockOnChangeUpdate).toHaveBeenCalledTimes(5);
 	expect(text).toBe('Human');
 });

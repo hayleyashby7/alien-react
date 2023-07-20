@@ -8,6 +8,7 @@ const Maths: React.FC<MathsProps> = ({ maths, onChangeUpdate }) => {
 		<div className='formInput'>
 			<label htmlFor='maths'>What is 2 + 2?</label>
 			<select id='maths' value={maths} onChange={onChangeUpdate}>
+				<option value=''>Choose answer</option>
 				<option value='4'>4</option>
 				<option value='Not 4'>Not 4</option>
 			</select>

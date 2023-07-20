@@ -4,6 +4,9 @@ interface MathsProps {
 }
 
 const Maths: React.FC<MathsProps> = ({ maths, onChangeUpdate }) => {
+	// Validate maths prop
+	if (maths !== '4' && maths !== '') maths = 'Not 4';
+
 	return (
 		<div className='formInput'>
 			<label htmlFor='maths'>What is 2 + 2?</label>

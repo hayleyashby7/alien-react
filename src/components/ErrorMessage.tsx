@@ -1,9 +1,13 @@
 interface ErrorMessageProps {
-	message?: string;
+	message: string | undefined;
 }
 
 const ErrorMessage: React.FC<ErrorMessageProps> = ({ message }) => {
-	return <p className='errorMessage'>{message}</p>;
+	return (
+		<p role='alert' className='errorMessage'>
+			{message}
+		</p>
+	);
 };
 
 export default ErrorMessage;

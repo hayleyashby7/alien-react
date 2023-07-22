@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import ErrorMessage from './ErrorMessage';
+import Input from './Input';
 
 interface SpeciesProps {
 	speciesName: string;
@@ -7,8 +6,6 @@ interface SpeciesProps {
 }
 
 const Species: React.FC<SpeciesProps> = ({ speciesName, onChangeUpdate }) => {
-	const [errorMessage, setErrorMessage] = useState<string | undefined>();
-
 	const validateSpeciesName = (value: string): string | undefined => {
 		return value.length === undefined
 			? 'Species Name is required'
@@ -21,22 +18,7 @@ const Species: React.FC<SpeciesProps> = ({ speciesName, onChangeUpdate }) => {
 			: undefined;
 	};
 
-	const onChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-		const error = validateSpeciesName(event.target.value);
-		setErrorMessage(error);
-		event.target.setCustomValidity(error || '');
-		onChangeUpdate(event);
-	};
-
-	return (
-		<>
-			<div className='formInput'>
-				<label htmlFor='speciesName'>Species Name:</label>
-				<input type='text' id='speciesName' name='species' value={speciesName} onChange={onChange} />
-			</div>
-			{errorMessage && <ErrorMessage message={errorMessage} />}
-		</>
-	);
+	return <Input name='species' value={speciesName} label='Species Name:' onChangeUpdate={onChangeUpdate} validateInput={validateSpeciesName} />;
 };
 
 export default Species;

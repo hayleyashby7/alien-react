@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import ErrorMessage from './ErrorMessage';
+import Input from './Input';
 
 interface PlanetProps {
 	planetName: string;
@@ -7,8 +6,6 @@ interface PlanetProps {
 }
 
 const Planet: React.FC<PlanetProps> = ({ planetName, onChangeUpdate }) => {
-	const [errorMessage, setErrorMessage] = useState<string | undefined>();
-
 	const validatePlanetName = (value: string): string | undefined => {
 		return value.length === undefined
 			? 'Planet Name is required'
@@ -21,22 +18,7 @@ const Planet: React.FC<PlanetProps> = ({ planetName, onChangeUpdate }) => {
 			: undefined;
 	};
 
-	const onChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-		const error = validatePlanetName(event.target.value);
-		setErrorMessage(error);
-		event.target.setCustomValidity(error || '');
-		onChangeUpdate(event);
-	};
-
-	return (
-		<>
-			<div className='formInput'>
-				<label htmlFor='planetName'>Planet Name:</label>
-				<input type='text' id='planetName' name='planet' value={planetName} onChange={onChange} />
-			</div>
-			{errorMessage && <ErrorMessage message={errorMessage} />}
-		</>
-	);
+	return <Input name='planet' value={planetName} label='Planet Name:' onChangeUpdate={onChangeUpdate} validateInput={validatePlanetName} />;
 };
 
 export default Planet;

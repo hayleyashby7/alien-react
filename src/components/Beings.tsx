@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import ErrorMessage from './ErrorMessage';
+import Input from './Input';
 
 interface BeingsProps {
 	beingsNumber: number;
@@ -7,8 +6,6 @@ interface BeingsProps {
 }
 
 const Beings: React.FC<BeingsProps> = ({ beingsNumber, onChangeUpdate }) => {
-	const [errorMessage, setErrorMessage] = useState<string | undefined>();
-
 	const validateBeingsNumber = (value: string): string | undefined => {
 		return value.length === undefined
 			? 'Total number of beings is required'
@@ -19,22 +16,7 @@ const Beings: React.FC<BeingsProps> = ({ beingsNumber, onChangeUpdate }) => {
 			: undefined;
 	};
 
-	const onChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-		const error = validateBeingsNumber(event.target.value);
-		setErrorMessage(error);
-		event.target.setCustomValidity(error || '');
-		onChangeUpdate(event);
-	};
-
-	return (
-		<>
-			<div className='formInput'>
-				<label htmlFor='beingsNumber'>Number of beings:</label>
-				<input type='number' id='beingsNumber' name='beings' value={beingsNumber} onChange={onChange} />
-			</div>
-			{errorMessage && <ErrorMessage message={errorMessage} />}
-		</>
-	);
+	return <Input name='beings' value={beingsNumber} label='Total Number of Beings:' onChangeUpdate={onChangeUpdate} validateInput={validateBeingsNumber} />;
 };
 
 export default Beings;

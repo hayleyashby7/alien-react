@@ -43,16 +43,18 @@ test('correct data submitted by W12MForm', async () => {
 	// Act
 	await userEvent.type(screen.getByRole('textbox', { name: /species name/i }), 'Human');
 	await userEvent.type(screen.getByRole('textbox', { name: /planet/i }), 'Earth');
-	await userEvent.type(screen.getByRole('spinbutton', { name: /number of beings/i }), '1');
+	await userEvent.type(screen.getByRole('spinbutton', { name: /number of beings/i }), '1000000000');
 	await userEvent.selectOptions(screen.getByRole('combobox'), '4');
-	await userEvent.type(screen.getByRole('textbox', { name: /reason for sparing/i }), 'I am human');
+	await userEvent.type(screen.getByRole('textbox', { name: /reason for sparing/i }), 'I am human and I want to live');
 	await userEvent.click(screen.getByRole('button', { name: /submit/i }));
 
 	// Assert
-	expect(consoleSpy).toHaveBeenCalledTimes(5);
-	expect(consoleSpy).toHaveBeenCalledWith('Species: ', 'Human');
-	expect(consoleSpy).toHaveBeenCalledWith('Planet: ', 'Earth');
-	expect(consoleSpy).toHaveBeenCalledWith('Beings: ', 1);
-	expect(consoleSpy).toHaveBeenCalledWith('Maths: ', '4');
-	expect(consoleSpy).toHaveBeenCalledWith('Reason: ', 'I am human');
+	expect(consoleSpy).toHaveBeenCalledTimes(1);
+	expect(consoleSpy).toHaveBeenCalledWith({
+		species: 'Human',
+		planet: 'Earth',
+		beings: '1000000000',
+		maths: '4',
+		reason: 'I am human and I want to live',
+	});
 });

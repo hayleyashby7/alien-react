@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import W12MHeader from './W12MHeader';
 import Species from './Species';
 import Planet from './Planet';
@@ -14,24 +14,23 @@ const W12MForm = () => {
 	const [maths, setMaths] = useState('');
 	const [reason, setReason] = useState('');
 
-	const handleSubmit = () => {
-		console.log('Species: ', species);
-		console.log('Planet: ', planet);
-		console.log('Beings: ', beings);
-		console.log('Maths: ', maths);
-		console.log('Reason: ', reason);
+	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+		const formData = new FormData(event.target as HTMLFormElement);
+		const data = Object.fromEntries(formData.entries());
+		console.log(data);
 	};
 
 	return (
-		<section className='w12MForm'>
+		<form className='w12MForm' onSubmit={handleSubmit}>
 			<W12MHeader />
 			<Species speciesName={species} onChangeUpdate={(e) => setSpecies(e.target.value)} />
 			<Planet planetName={planet} onChangeUpdate={(e) => setPlanet(e.target.value)} />
 			<Beings beingsNumber={beings} onChangeUpdate={(e) => setBeings(parseInt(e.target.value))} />
 			<Maths maths={maths} onChangeUpdate={(e) => setMaths(e.target.value)} />
 			<Reason reason={reason} onChangeUpdate={(e) => setReason(e.target.value)} />
-			<Button onClick={handleSubmit} />
-		</section>
+			<Button />
+		</form>
 	);
 };
 

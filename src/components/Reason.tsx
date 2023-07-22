@@ -22,6 +22,7 @@ const Reason: React.FC<ReasonProps> = ({ reason, onChangeUpdate }) => {
 	const onChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
 		const error = validateReason(event.target.value);
 		setErrorMessage(error);
+		event.target.setCustomValidity(error || '');
 		onChangeUpdate(event);
 	};
 

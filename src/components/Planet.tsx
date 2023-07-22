@@ -24,6 +24,7 @@ const Planet: React.FC<PlanetProps> = ({ planetName, onChangeUpdate }) => {
 	const onChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
 		const error = validatePlanetName(event.target.value);
 		setErrorMessage(error);
+		event.target.setCustomValidity(error || '');
 		onChangeUpdate(event);
 	};
 

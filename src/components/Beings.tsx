@@ -22,6 +22,7 @@ const Beings: React.FC<BeingsProps> = ({ beingsNumber, onChangeUpdate }) => {
 	const onChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
 		const error = validateBeingsNumber(event.target.value);
 		setErrorMessage(error);
+		event.target.setCustomValidity(error || '');
 		onChangeUpdate(event);
 	};
 

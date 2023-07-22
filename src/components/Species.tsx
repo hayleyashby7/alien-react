@@ -24,6 +24,7 @@ const Species: React.FC<SpeciesProps> = ({ speciesName, onChangeUpdate }) => {
 	const onChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
 		const error = validateSpeciesName(event.target.value);
 		setErrorMessage(error);
+		event.target.setCustomValidity(error || '');
 		onChangeUpdate(event);
 	};
 

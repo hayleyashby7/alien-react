@@ -19,6 +19,7 @@ const Maths: React.FC<MathsProps> = ({ maths, onChangeUpdate }) => {
 	const onChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
 		const error = validateMathsInput(event.target.value);
 		setErrorMessage(error);
+		event.target.setCustomValidity(error || '');
 		onChangeUpdate(event);
 	};
 

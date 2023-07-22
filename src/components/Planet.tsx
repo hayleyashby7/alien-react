@@ -31,7 +31,7 @@ const Planet: React.FC<PlanetProps> = ({ planetName, onChangeUpdate }) => {
 		<>
 			<div className='formInput'>
 				<label htmlFor='planetName'>Planet Name:</label>
-				<input type='text' id='planetName' value={planetName} onChange={onChange} />
+				<input type='text' id='planetName' name='planet' value={planetName} onChange={onChange} />
 			</div>
 			{errorMessage && <ErrorMessage message={errorMessage} />}
 		</>

@@ -29,7 +29,7 @@ const Beings: React.FC<BeingsProps> = ({ beingsNumber, onChangeUpdate }) => {
 		<>
 			<div className='formInput'>
 				<label htmlFor='beingsNumber'>Number of beings:</label>
-				<input type='number' id='beingsNumber' value={beingsNumber} onChange={onChange} />
+				<input type='number' id='beingsNumber' name='beings' value={beingsNumber} onChange={onChange} />
 			</div>
 			{errorMessage && <ErrorMessage message={errorMessage} />}
 		</>

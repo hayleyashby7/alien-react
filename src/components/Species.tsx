@@ -31,7 +31,7 @@ const Species: React.FC<SpeciesProps> = ({ speciesName, onChangeUpdate }) => {
 		<>
 			<div className='formInput'>
 				<label htmlFor='speciesName'>Species Name:</label>
-				<input type='text' id='speciesName' value={speciesName} onChange={onChange} />
+				<input type='text' id='speciesName' name='species' value={speciesName} onChange={onChange} />
 			</div>
 			{errorMessage && <ErrorMessage message={errorMessage} />}
 		</>

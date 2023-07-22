@@ -29,7 +29,7 @@ const Reason: React.FC<ReasonProps> = ({ reason, onChangeUpdate }) => {
 		<>
 			<div className='formInput'>
 				<label htmlFor='Reason'>Reason for sparing:</label>
-				<textarea id='Reason' value={reason} onChange={onChange} />
+				<textarea id='Reason' name='reason' value={reason} onChange={onChange} />
 			</div>
 			{errorMessage && <ErrorMessage message={errorMessage} />}
 		</>

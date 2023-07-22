@@ -62,3 +62,43 @@ test('renders Beings component with props and updates', async () => {
 	expect(mockOnChangeUpdate).toHaveBeenCalledTimes(1);
 	expect(number).toBe('8');
 });
+
+test('renders Beings component with props and updates with error if number too low', async () => {
+	// Arrange
+	let number = '';
+
+	const mockOnChangeUpdate = jest.fn((event: ChangeEvent<HTMLInputElement>) => {
+		number += event.target.value;
+	});
+
+	render(<Beings beingsNumber={0} onChangeUpdate={mockOnChangeUpdate} />);
+
+	// Act
+	await userEvent.type(screen.getByRole('spinbutton'), '8');
+
+	// Assert
+	expect(mockOnChangeUpdate).toHaveBeenCalledTimes(1);
+	expect(number).toBe('8');
+	expect(screen.getByRole('alert')).toBeInTheDocument();
+	expect(screen.getByRole('alert')).toHaveTextContent('Must be at least 1,000,000,000 beings');
+});
+
+test('renders Beings component with props and updates with error if non-number value entered', async () => {
+	// Arrange
+	let number = '';
+
+	const mockOnChangeUpdate = jest.fn((event: ChangeEvent<HTMLInputElement>) => {
+		number += event.target.value;
+	});
+
+	render(<Beings beingsNumber={100000000000} onChangeUpdate={mockOnChangeUpdate} />);
+
+	// Act
+	await userEvent.type(screen.getByRole('spinbutton'), 'undefinedproblematicentry');
+
+	// Assert
+	expect(mockOnChangeUpdate).toHaveBeenCalled();
+	expect(number).toBe('');
+	expect(screen.getByRole('alert')).toBeInTheDocument();
+	expect(screen.getByRole('alert')).toHaveTextContent('Only numbers allowed');
+});

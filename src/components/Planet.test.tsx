@@ -45,7 +45,7 @@ test('renders Planet component with props', () => {
 	expect(input).toHaveValue('Earth');
 });
 
-test('renders Planet component with props and updates', async () => {
+test('renders Planet component with props and updates without error if valid planet name', async () => {
 	// Arrange
 	let text = '';
 
@@ -53,14 +53,15 @@ test('renders Planet component with props and updates', async () => {
 		text += event.target.value;
 	});
 
-	render(<Planet planetName={''} onChangeUpdate={mockOnChangeUpdate} />);
+	render(<Planet planetName={'Eart'} onChangeUpdate={mockOnChangeUpdate} />);
 
 	// Act
-	await userEvent.type(screen.getByRole('textbox'), 'Earth');
+	await userEvent.type(screen.getByRole('textbox'), 'h');
 
 	// Assert
-	expect(mockOnChangeUpdate).toHaveBeenCalledTimes(5);
+	expect(mockOnChangeUpdate).toHaveBeenCalledTimes(1);
 	expect(text).toBe('Earth');
+	expect(screen.queryByRole('alert')).not.toBeInTheDocument();
 });
 
 test('renders Planet component with props and updates with error if too few characters', async () => {

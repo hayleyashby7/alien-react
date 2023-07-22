@@ -45,7 +45,7 @@ test('renders Beings component with props', () => {
 	expect(input).toHaveValue(100);
 });
 
-test('renders Beings component with props and updates', async () => {
+test('renders Beings component with props and updates without error if valid number', async () => {
 	// Arrange
 	let number = '';
 
@@ -53,14 +53,15 @@ test('renders Beings component with props and updates', async () => {
 		number += event.target.value;
 	});
 
-	render(<Beings beingsNumber={0} onChangeUpdate={mockOnChangeUpdate} />);
+	render(<Beings beingsNumber={1000000000} onChangeUpdate={mockOnChangeUpdate} />);
 
 	// Act
 	await userEvent.type(screen.getByRole('spinbutton'), '8');
 
 	// Assert
 	expect(mockOnChangeUpdate).toHaveBeenCalledTimes(1);
-	expect(number).toBe('8');
+	expect(number).toBe('10000000008');
+	expect(screen.queryByRole('alert')).not.toBeInTheDocument();
 });
 
 test('renders Beings component with props and updates with error if number too low', async () => {

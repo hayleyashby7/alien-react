@@ -82,8 +82,7 @@ test('renders Maths component with props and updates without error if 4 selected
 	// Assert
 	expect(mockOnChangeUpdate).toHaveBeenCalledTimes(1);
 	expect(option).toBe('4');
-	expect(screen.getByRole('alert')).toBeInTheDocument();
-	expect(screen.getByRole('alert')).toHaveTextContent('');
+	expect(screen.queryByRole('alert')).not.toBeInTheDocument();
 });
 
 test('renders Maths component with props and updates with error if 4 is not selected', async () => {

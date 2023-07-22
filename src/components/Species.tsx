@@ -33,7 +33,7 @@ const Species: React.FC<SpeciesProps> = ({ speciesName, onChangeUpdate }) => {
 				<label htmlFor='speciesName'>Species Name:</label>
 				<input type='text' id='speciesName' value={speciesName} onChange={onChange} />
 			</div>
-			<ErrorMessage message={errorMessage} />
+			{errorMessage && <ErrorMessage message={errorMessage} />}
 		</>
 	);
 };

@@ -45,7 +45,7 @@ test('renders Species component with props', () => {
 	expect(input).toHaveValue('Human');
 });
 
-test('renders Species component with props and updates', async () => {
+test('renders Species component with props and updates without error if valid species name', async () => {
 	// Arrange
 	let text = '';
 
@@ -53,14 +53,15 @@ test('renders Species component with props and updates', async () => {
 		text += event.target.value;
 	});
 
-	render(<Species speciesName={''} onChangeUpdate={mockOnChangeUpdate} />);
+	render(<Species speciesName={'Huma'} onChangeUpdate={mockOnChangeUpdate} />);
 
 	// Act
-	await userEvent.type(screen.getByRole('textbox'), 'Human');
+	await userEvent.type(screen.getByRole('textbox'), 'n');
 
 	// Assert
-	expect(mockOnChangeUpdate).toHaveBeenCalledTimes(5);
+	expect(mockOnChangeUpdate).toHaveBeenCalledTimes(1);
 	expect(text).toBe('Human');
+	expect(screen.queryByRole('alert')).not.toBeInTheDocument();
 });
 
 test('renders Species component with props and updates with error if too few characters', async () => {

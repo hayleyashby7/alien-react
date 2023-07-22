@@ -33,7 +33,7 @@ const Planet: React.FC<PlanetProps> = ({ planetName, onChangeUpdate }) => {
 				<label htmlFor='planetName'>Planet Name:</label>
 				<input type='text' id='planetName' value={planetName} onChange={onChange} />
 			</div>
-			<ErrorMessage message={errorMessage} />
+			{errorMessage && <ErrorMessage message={errorMessage} />}
 		</>
 	);
 };

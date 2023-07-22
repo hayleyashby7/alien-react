@@ -32,7 +32,7 @@ const Maths: React.FC<MathsProps> = ({ maths, onChangeUpdate }) => {
 					<option value='Not 4'>Not 4</option>
 				</select>
 			</div>
-			<ErrorMessage message={errorMessage} />
+			{errorMessage && <ErrorMessage message={errorMessage} />}
 		</>
 	);
 };

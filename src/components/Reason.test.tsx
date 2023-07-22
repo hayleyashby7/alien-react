@@ -45,20 +45,70 @@ test('renders Reason component with props', () => {
 	expect(input).toHaveValue('Here, for whatever reason, is the world. And here it stays. With me on it');
 });
 
-test('renders Reason component with props and updates', async () => {
-    // Arrange
-    let text = '';
+test('renders Reason component with props and updates without error if reason is valid length', async () => {
+	// Arrange
+	let text = '';
 
-    const mockOnChangeUpdate = jest.fn((event: ChangeEvent<HTMLTextAreaElement>) => {
-        text += event.target.value;
-    });
+	const mockOnChangeUpdate = jest.fn((event: ChangeEvent<HTMLTextAreaElement>) => {
+		text += event.target.value;
+	});
 
-    render(<Reason reason={''} onChangeUpdate={mockOnChangeUpdate} />);
+	render(<Reason reason={'Here, for whatever reason, is the world. And here it stays. With me on i'} onChangeUpdate={mockOnChangeUpdate} />);
 
-    // Act
-    await userEvent.type(screen.getByRole('textbox'), 'Here, for whatever reason, is the world. And here it stays. With me on it');
+	// Act
+	await userEvent.type(screen.getByRole('textbox'), 't');
 
-    // Assert
-    expect(mockOnChangeUpdate).toHaveBeenCalledTimes(73);
-    expect(text).toBe('Here, for whatever reason, is the world. And here it stays. With me on it');
+	// Assert
+	expect(mockOnChangeUpdate).toHaveBeenCalledTimes(1);
+	expect(text).toBe('Here, for whatever reason, is the world. And here it stays. With me on it');
+	expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+});
+
+test('renders Reason component with props and updates with error if reason too short', async () => {
+	// Arrange
+	let text = '';
+
+	const mockOnChangeUpdate = jest.fn((event: ChangeEvent<HTMLTextAreaElement>) => {
+		text += event.target.value;
+	});
+
+	render(<Reason reason={'Her'} onChangeUpdate={mockOnChangeUpdate} />);
+
+	// Act
+	await userEvent.type(screen.getByRole('textbox'), 'e');
+
+	// Assert
+	expect(mockOnChangeUpdate).toHaveBeenCalledTimes(1);
+	expect(text).toBe('Here');
+	expect(screen.getByRole('alert')).toBeInTheDocument();
+	expect(screen.getByRole('alert')).toHaveTextContent('Reason must be at least 17 characters');
+});
+
+test('renders Reason component with props and updates with error if reason too long', async () => {
+	// Arrange
+	let text = '';
+
+	const mockOnChangeUpdate = jest.fn((event: ChangeEvent<HTMLTextAreaElement>) => {
+		text += event.target.value;
+	});
+
+	render(
+		<Reason
+			reason={
+				'Here, for whatever reason, is the world. And here it stays. With me on it. Here, for whatever reason, is the world. And here it stays. With me on it. Here, for whatever reason, is the world. And here it stays. With me on it. Here, for whatever reason, is the world. And here it stays. With me on it. Here, for whatever reason, is the world. And here it stays. With me on it. Here, for whatever reason, is the world. And here it stays. With me on it. Here, for whatever reason, is the world. And here it stays. With me on it. Here, for whatever reason, is the world. And here it stays. With me on it'
+			}
+			onChangeUpdate={mockOnChangeUpdate}
+		/>
+	);
+
+	// Act
+	await userEvent.type(screen.getByRole('textbox'), '.');
+
+	// Assert
+	expect(mockOnChangeUpdate).toHaveBeenCalledTimes(1);
+	expect(text).toBe(
+		'Here, for whatever reason, is the world. And here it stays. With me on it. Here, for whatever reason, is the world. And here it stays. With me on it. Here, for whatever reason, is the world. And here it stays. With me on it. Here, for whatever reason, is the world. And here it stays. With me on it. Here, for whatever reason, is the world. And here it stays. With me on it. Here, for whatever reason, is the world. And here it stays. With me on it. Here, for whatever reason, is the world. And here it stays. With me on it. Here, for whatever reason, is the world. And here it stays. With me on it.'
+	);
+	expect(screen.getByRole('alert')).toBeInTheDocument();
+	expect(screen.getByRole('alert')).toHaveTextContent('Reason must be less than 153 characters');
 });
